@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Gestor IPTV Pro ⚡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Enlace a la hoja de estilos externa -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ======================= -->
+    <!--     PANTALLA DE LOGIN     -->
+    <!-- ======================= -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h1>⚡</h1>
+            <p>Gestor IPTV Pro</p>
+            <form id="login-form">
+                <input type="password" id="password" placeholder="Ingresa la clave de acceso" required>
+                <div class="error" id="login-error">Clave incorrecta. Inténtalo de nuevo.</div>
+                <button type="submit" class="btn">Acceder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======================= -->
+    <!--    CONTENIDO PRINCIPAL    -->
+    <!-- ======================= -->
+    <div id="app-container">
+        <div id="admin-notification">
+            <span id="notification-text"></span>
+            <span class="close-alert">&times;</span>
+        </div>
+
+        <button class="btn" id="btn-logout" title="Cerrar Sesión">⏏️ Salir</button>
+        <header class="main-header">
+            <h1>Panel de Control</h1>
+            <div class="stats-cards">
+                <div class="card">
+                    <h3>Total Clientes</h3>
+                    <p id="stat-total">0</p>
+                </div>
+                <div class="card">
+                    <h3>Activos</h3>
+                    <p id="stat-activos">0</p>
+                </div>
+                <div class="card status-por-vencer">
+                    <h3>Por Vencer (1-3 días)</h3>
+                    <p id="stat-por-vencer">0</p>
+                </div>
+                <div class="card status-vencido">
+                    <h3>Vencidos (≤0 días)</h3>
+                    <p id="stat-vencidos">0</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="client-manager">
+            <div class="toolbar">
+                <button class="btn" id="btn-add-client">✚ Agregar Cliente</button>
+                <div class="search-filter">
+                    <input type="text" id="search-input" placeholder="Buscar por nombre, usuario o plataforma...">
+                    <select id="filter-select">
+                        <option value="todos">Todos</option>
+                        <option value="activo">Activos</option>
+                        <option value="por_vencer">Por Vencer</option>
+                        <option value="vencido">Vencidos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Plataforma</th>
+                            <th>Usuario</th>
+                            <th>Vencimiento</th>
+                            <th>Días Rest.</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="client-table-body">
+                        <!-- Las filas de clientes se insertarán aquí con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- ======================= -->
+    <!--          MODAL            -->
+    <!-- ======================= -->
+    <div id="client-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title">Agregar Nuevo Cliente</h2>
+            <form id="client-form">
+                <input type="hidden" id="cliente_id">
+                <div class="form-group">
+                    <label for="nombre_completo">Nombre Completo</label>
+                    <input type="text" id="nombre_completo" required>
+                </div>
+                 <div class="form-group">
+                    <label for="whatsapp">Nº de WhatsApp (con cód. de país)</label>
+                    <input type="tel" id="whatsapp" placeholder="Ej: 5491122334455" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="plataforma">Plataforma de Servicio</label>
+                    <select id="plataforma" required>
+                        <option value="" disabled selected>Selecciona una plataforma...</option>
+                        <option value="IPTV Genérico">IPTV Genérico</option>
+                        <option value="Netflix">Netflix</option>
+                        <option value="Prime Video">Prime Video</option>
+                        <option value="Disney+">Disney+</option>
+                        <option value="HBO Max">HBO Max</option>
+                        <option value="Star+">Star+</option>
+                        <option value="YouTube Premium">YouTube Premium</option>
+                        <option value="Spotify">Spotify</option>
+                        <option value="Paramount+">Paramount+</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario_iptv">Usuario / Email</label>
+                    <input type="text" id="usuario_iptv" required>
+                </div>
+                <div class="form-group">
+                    <label for="password_iptv">Contraseña</label>
+                    <input type="text" id="password_iptv" required>
+                </div>
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha Inicio</label>
+                        <input type="date" id="fecha_inicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dias_contratados">Días Contratados</label>
+                        <input type="number" id="dias_contratados" value="30" min="1" max="30" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Vencimiento (calculada)</label>
+                    <p id="fecha_vencimiento_display" class="date-display"></p>
+                </div>
+                <button type="submit" class="btn" id="btn-save-client">Guardar</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Enlace al archivo de JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

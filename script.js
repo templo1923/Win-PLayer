@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnLogout.addEventListener('click', () => {
         sessionStorage.removeItem('isLoggedIn');
-        document.title = '⚡ Gestor IPTV Pro ⚡';
+        document.title = '⚡ Panel De Control ⚡';
         mostrarLogin();
     });
 
@@ -95,10 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const count = clientesPorVencer.length;
                 notificationText.textContent = `🔔 Tienes ${count} cliente(s) a punto de vencer. ¡Notifícales ahora!`;
                 notificationBanner.style.display = 'block';
-                document.title = `(${count}) ⚡ Gestor IPTV Pro ⚡`;
+                document.title = `(${count}) ⚡ Panel De Control ⚡`;
             } else {
                 notificationBanner.style.display = 'none';
-                document.title = '⚡ Gestor IPTV Pro ⚡';
+                document.title = '⚡ Panel De Control ⚡';
             }
         };
         
